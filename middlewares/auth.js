@@ -7,8 +7,14 @@ exports.auth = (req, res, next) => {
   try {
     // extract jwt token
     // Pending :other ways to fetch token
-    const token = req.body.token;
-    if (!token) {
+    console.log("cookie", req.cookies.token);
+    console.log("body", req.body.token);
+
+    const token =
+      req.cookies.token ||
+      req.body.token ||
+      req.header("Authorization").replace("Bearer", "");
+    if (!token || token === undefined) {
       return res.status(401).json({
         success: false,
         message: "Token Missing",

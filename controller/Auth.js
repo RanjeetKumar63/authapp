@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const { config } = require("dotenv");
 require("dotenv").config();
 
 // sign-up handler
@@ -89,12 +88,18 @@ exports.login = async (req, res) => {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       };
-      res.cookie("RanjeetCookie", token, options).status(200).json({
+      res.cookie("Ranjeet", token, options).status(200).json({
         success: true,
         token,
         user,
         message: "User Logged in Successfully",
       });
+      // res.status(200).json({
+      //   success: true,
+      //   token,
+      //   user,
+      //   message: "User Logged in Successfully",
+      // });
     } else {
       // password do not match
       return res.status(403).json({
